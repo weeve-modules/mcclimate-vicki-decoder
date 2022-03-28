@@ -33,7 +33,8 @@ You'll be able to retrieve:
 - Temp and humidity sensor status byte - is it functional or broken
 - Battery voltage
 
-Incoming payload looks like this:
+- Incoming payload looks like this
+```js
 {
   "payload": {
     "adr": true,
@@ -86,8 +87,10 @@ Incoming payload looks like this:
   },
   "type": "up"
 }
+```
 
-Decoded output passed to next module via POST call will look like this:
+- Decoded output passed to next module via POST call will look like this
+```js
 {
    "payload":{
       "adr":true,
@@ -153,7 +156,7 @@ Decoded output passed to next module via POST call will look like this:
    },
    "type":"up"
 }
-
+```
 ## Features
 
 * Parsing Melita.io data for thermostat
