@@ -1,0 +1,11 @@
+version: '1'
+services:
+  mcclimate:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      MODULE_NAME: mcclimate
+      EGRESS_URL: https://testmp.free.beeceptor.com/
+      HOST_NAME: 127.0.0.1
+      HOST_PORT: 80

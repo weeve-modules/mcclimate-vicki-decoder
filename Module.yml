@@ -1,0 +1,43 @@
+version: 1.0.0
+name: McClimate Vicki Decoder
+description: Decoder for McClimate Vicki Decoder
+icon: https://icons-020-demo.s3.eu-central-1.amazonaws.com/mi_mqtt_input.png
+type: input
+tags:
+  - McClimate
+  - Vicki
+  - Decoder
+categories:
+  - id: category
+    name: Decoder
+image:
+  name: weevenetwork/mcclimate-vicki-decoder
+  tag: latest
+environments:
+  - key: EGRESS_URL
+    description: Paste the URL address endpoint for results.
+    value: ''
+    default: http://...
+    type: string
+    name: RESULT URL
+  - key: HOST_NAME
+    description: Host name/address where the server will run.
+    value: ''
+    default: 0.0.0.0
+    type: string
+    name: Host Name
+  - key: HOST_PORT
+    description: Port on which the server will run.
+    value: ''
+    default: 80
+    type: integer
+    name: Port
+commands: []
+document:
+  ports: []
+  volumes: []
+  restart_policy:
+    condition: on-failure
+    delay: 10s
+    max_attempts: 3
+    window: 120s
