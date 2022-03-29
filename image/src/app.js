@@ -5,7 +5,8 @@ const bodyParser = require("body-parser");
 const app = express()
 const winston = require('winston');
 const expressWinston = require('express-winston');
-const { decode }=require('./util/decoder');
+const { decode }=require('./utils/decoder');
+const { formatPayload }=require('./utils/util');
 
 //initialization
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -40,12 +41,13 @@ app.post('/',async (req, res)=> {
   }
   // parse data property, and update it
   json.payload.data=decode(Buffer.from(json.payload.data, "base64").toString('hex'));
+  const output_payload=formatPayload(json);
   const callRes=await fetch(EGRESS_URL,{
     method:"POST",
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(json)
+    body: JSON.stringify(output_payload)
   });
   if (!callRes.ok){    
     res.status(500).json({status: false, message: `Error passing response data to ${EGRESS_URL}`});
@@ -54,7 +56,7 @@ app.post('/',async (req, res)=> {
 });
 
 //handle exceptions
-app.use((err, req, res, next) => {
+app.use(async (err, req, res, next) => {
   if (res.headersSent) {
       return next(err);
   }

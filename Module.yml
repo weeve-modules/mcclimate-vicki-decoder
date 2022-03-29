@@ -32,6 +32,21 @@ environments:
     default: 80
     type: integer
     name: Port
+  - key: NESTED_RESPONSE
+    description: Should output response be a nested structure ?
+    value: ''
+    default: no
+    type: enum
+    options:
+      - yes
+      - no
+    name: Nested response
+  - key: CUSTOM_FIELDS
+    description: List of comma (,) separated fields that should be sent in response, if ommited, all fields are sent.
+    value: ''
+    default: ''
+    type: string
+    name: Custom fields in response
 commands: []
 document:
   ports: []
