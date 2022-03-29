@@ -157,6 +157,96 @@ You'll be able to retrieve:
    "type":"up"
 }
 ```
+
+- Depending on environment variables NESTED_RESPONSE & CUSTOM_FIELDS out can be nestd with few fields or with all fields in "data" property, for example:
+- - when nested without custom fields
+```js
+{
+  timestamp: '2022-03-22T11:31:29.527',
+  devEUI: '70b3d52dd3003e30',
+  deviceName: '70B3D52DD3003E30',
+  data: {
+    reason: 1,
+    targetTemperature: 0,
+    sensorTemperature: 12.8515625,
+    relativeHumidity: 0.78125,
+    motorRange: 3587,
+    motorPosition: 3903,
+    batteryVoltage: 2,
+    openWindow: false,
+    childLock: true,
+    highMotorConsumption: true,
+    lowMotorConsumption: true,
+    brokenSensor: true
+  }
+}
+```
+- - when nested with custom fields
+```js
+{
+  timestamp: '2022-03-22T11:31:29.527',
+  devEUI: '70b3d52dd3003e30',
+  deviceName: '70B3D52DD3003E30',
+  data: {    
+    targetTemperature: 0,    
+  }
+}
+```
+- - when not nested without custom fields
+```js
+{
+  timestamp: '2022-03-22T11:31:29.527',
+  devEUI: '70b3d52dd3003e30',
+  deviceName: '70B3D52DD3003E30',
+  reason: 1,
+  targetTemperature: 0,
+  sensorTemperature: 12.8515625,
+  relativeHumidity: 0.78125,
+  motorRange: 3587,
+  motorPosition: 3903,
+  batteryVoltage: 2,
+  openWindow: false,
+  childLock: true,
+  highMotorConsumption: true,
+  lowMotorConsumption: true,
+  brokenSensor: true
+}
+```
+
+- - when nested without custom fields
+```js
+{
+  timestamp: '2022-03-22T11:31:29.527',
+  devEUI: '70b3d52dd3003e30',
+  deviceName: '70B3D52DD3003E30',
+  data: {    
+    reason: 1,
+    targetTemperature: 0,
+    sensorTemperature: 12.8515625,
+    relativeHumidity: 0.78125,
+    motorRange: 3587,
+    motorPosition: 3903,
+    batteryVoltage: 2,
+    openWindow: false,
+    childLock: true,
+    highMotorConsumption: true,
+    lowMotorConsumption: true,
+    brokenSensor: true
+  }
+}
+```
+
+- - when nested with custom fields
+```js
+{
+  timestamp: '2022-03-22T11:31:29.527',
+  devEUI: '70b3d52dd3003e30',
+  deviceName: '70B3D52DD3003E30',
+  data: {    
+    targetTemperature: 0,    
+  }
+}
+```
 ## Features
 
 * Parsing Melita.io data for thermostat
