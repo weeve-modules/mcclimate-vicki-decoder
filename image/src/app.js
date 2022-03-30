@@ -1,4 +1,4 @@
-const { EGRESS_URL, HOST_NAME, HOST_PORT } = require('./config/config.js')
+const { EGRESS_URL, HOST_NAME, HOST_PORT, MODULE_NAME } = require('./config/config.js')
 const fetch = require('node-fetch')
 const express = require('express')
 const bodyParser = require("body-parser");
@@ -6,7 +6,7 @@ const app = express()
 const winston = require('winston');
 const expressWinston = require('express-winston');
 const { decode }=require('./utils/decoder');
-const { formatPayload }=require('./utils/util');
+const { formatPayload, formatTimeDiff }=require('./utils/util');
 
 //initialization
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -32,7 +32,15 @@ app.use(expressWinston.logger({
   colorize: false, // Color the text and status code, using the Express/morgan color palette (text: gray, status: default green, 3XX cyan, 4XX yellow, 5XX red).
   ignoreRoute: function (req, res) { return false; } // optional: allows to skip some log messages based on request and/or response
 }));
-
+const startTime=Date.now();
+//health check
+app.get('/health',async (req,res)=>{
+  res.json({
+    "serverStatus": "Running",
+    "uptime":  formatTimeDiff(Date.now(),startTime),
+    "module": MODULE_NAME
+  });
+});
 //main post listener
 app.post('/',async (req, res)=> {
   let json=req.body;
@@ -69,6 +77,6 @@ app.use(async (err, req, res, next) => {
 
 if (require.main === module) {
   app.listen(HOST_PORT, HOST_NAME, () => {
-      console.log(`McClimate Vicki Decoder listening on ${HOST_PORT}`);
+      console.log(`${MODULE_NAME} listening on ${HOST_PORT}`);
   });
 }
