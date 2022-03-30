@@ -66,7 +66,7 @@ You'll be able to retrieve:
         },
         "rfChain": 0,
         "rssi": -69,
-        "time": "2022-03-22T11:31:29.527",
+        "time": "1647945089527",
         "timeSinceGPSEpoch": null,
         "uplinkID": "b0Gb7KexQnKNp42bxnYD1w=="
       }
@@ -135,7 +135,7 @@ You'll be able to retrieve:
             },
             "rfChain":0,
             "rssi":-69,
-            "time":"2022-03-22T11:31:29.527",
+            "time":"1647945089527",
             "timeSinceGPSEpoch":null,
             "uplinkID":"b0Gb7KexQnKNp42bxnYD1w=="
          }
@@ -162,7 +162,7 @@ You'll be able to retrieve:
 - - when nested without custom fields
 ```js
 {
-  timestamp: '2022-03-22T11:31:29.527',
+  timestamp: '1647945089527',
   devEUI: '70b3d52dd3003e30',
   deviceName: '70B3D52DD3003E30',
   data: {
@@ -184,7 +184,7 @@ You'll be able to retrieve:
 - - when nested with custom fields
 ```js
 {
-  timestamp: '2022-03-22T11:31:29.527',
+  timestamp: '1647945089527',
   devEUI: '70b3d52dd3003e30',
   deviceName: '70B3D52DD3003E30',
   data: {    
@@ -195,7 +195,7 @@ You'll be able to retrieve:
 - - when not nested without custom fields
 ```js
 {
-  timestamp: '2022-03-22T11:31:29.527',
+  timestamp: '1647945089527',
   devEUI: '70b3d52dd3003e30',
   deviceName: '70B3D52DD3003E30',
   reason: 1,
@@ -216,7 +216,7 @@ You'll be able to retrieve:
 - - when nested without custom fields
 ```js
 {
-  timestamp: '2022-03-22T11:31:29.527',
+  timestamp: '1647945089527',
   devEUI: '70b3d52dd3003e30',
   deviceName: '70B3D52DD3003E30',
   data: {    
@@ -239,7 +239,7 @@ You'll be able to retrieve:
 - - when nested with custom fields
 ```js
 {
-  timestamp: '2022-03-22T11:31:29.527',
+  timestamp: '1647945089527',
   devEUI: '70b3d52dd3003e30',
   deviceName: '70B3D52DD3003E30',
   data: {    
