@@ -6,5 +6,5 @@ module.exports = {
   HOST_PORT: env('HOST_PORT', '8080'),
   NESTED_RESPONSE: env('NESTED_RESPONSE', 'no'),
   CUSTOM_FIELDS: env('CUSTOM_FIELDS', ''),
-  MODULE_NAME:env('MODULE_NAME','McClimate Vicki Decoder')
+  MODULE_NAME: env('MODULE_NAME', 'McClimate Vicki Decoder'),
 }
