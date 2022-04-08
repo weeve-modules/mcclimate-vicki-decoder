@@ -36,7 +36,7 @@ You'll be able to retrieve:
 - Incoming payload looks like this
 ```js
 {
-  "payload": {
+  "data": {
     "adr": true,
     "applicationID": "165",
     "applicationName": "101976551-101976576-",
@@ -92,7 +92,7 @@ You'll be able to retrieve:
 - Decoded output passed to next module via POST call will look like this
 ```js
 {
-   "payload":{
+   "data":{
       "adr":true,
       "applicationID":"165",
       "applicationName":"101976551-101976576-",

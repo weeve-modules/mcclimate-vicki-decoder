@@ -45,23 +45,28 @@ app.get('/health', async (req, res) => {
 //main post listener
 app.post('/', async (req, res) => {
   let json = req.body
-  if (!json.payload) {
-    res.status(400).json({ status: false, message: 'Payload structure is not valid.' })
+  if (typeof json.data==='undefined') {
+    return res.status(400).json({ status: false, message: 'Payload structure is not valid.' })
   }
   // parse data property, and update it
-  json.payload.data = decode(Buffer.from(json.payload.data, 'base64').toString('hex'))
+  json.data.data = decode(Buffer.from(json.data.data, 'base64').toString('hex'))
   const output_payload = formatPayload(json)
-  const callRes = await fetch(EGRESS_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(output_payload),
-  })
-  if (!callRes.ok) {
-    res.status(500).json({ status: false, message: `Error passing response data to ${EGRESS_URL}` })
+  if (EGRESS_URL!==''){
+    const callRes = await fetch(EGRESS_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(output_payload),
+    })
+    if (!callRes.ok) {
+      return res.status(500).json({ status: false, message: `Error passing response data to ${EGRESS_URL}` })
+    }
+    return res.status(200).json({ status: true, message: 'Payload processed' })
+  } else
+  {
+    return res.status(200).json(output_payload);
   }
-  res.status(200).json({ status: true, message: 'Payload processed' })
 })
 
 //handle exceptions
