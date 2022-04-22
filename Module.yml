@@ -14,12 +14,6 @@ image:
   name: weevenetwork/mcclimate-vicki-decoder
   tag: latest
 environments:
-  - key: EGRESS_URL
-    description: Paste the URL address endpoint for results.
-    value: ''
-    default: http://...
-    type: string
-    name: RESULT URL
   - key: HOST_NAME
     description: Host name/address where the server will run.
     value: ''
