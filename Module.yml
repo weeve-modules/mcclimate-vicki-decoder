@@ -1,0 +1,52 @@
+version: 1.0.0
+name: McClimate Vicki Decoder
+description: Decoder for McClimate Vicki Decoder
+icon: https://icons-020-demo.s3.eu-central-1.amazonaws.com/mi_m-climate_process.png
+type: input
+tags:
+  - McClimate
+  - Vicki
+  - Decoder
+categories:
+  - id: category
+    name: Decoder
+image:
+  name: weevenetwork/mcclimate-vicki-decoder
+  tag: latest
+environments:
+  - key: HOST_NAME
+    description: Host name/address where the server will run.
+    value: ''
+    default: 0.0.0.0
+    type: string
+    name: Host Name
+  - key: HOST_PORT
+    description: Port on which the server will run.
+    value: ''
+    default: 80
+    type: integer
+    name: Port
+  - key: NESTED_RESPONSE
+    description: Should output response be a nested structure ?
+    value: ''
+    default: no
+    type: enum
+    options:
+      - yes
+      - no
+    name: Nested response
+  - key: CUSTOM_FIELDS
+    description: List of comma (,) separated fields that should be sent in response, if ommited, all fields are sent.
+    value: ''
+    default: ''
+    type: string
+    name: Custom fields in response
+commands: []
+document:
+  ports: []
+  volumes: []
+  restart_policy:
+    condition: on-failure
+    delay: 10s
+    max_attempts: 3
+    window: 120s
