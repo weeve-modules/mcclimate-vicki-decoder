@@ -45,11 +45,11 @@ app.get('/health', async (req, res) => {
 //main post listener
 app.post('/', async (req, res) => {
   let json = req.body
-  if (typeof json.data==='undefined') {
+  if (typeof json.payload==='undefined') {
     return res.status(400).json({ status: false, message: 'Payload structure is not valid.' })
   }
   // parse data property, and update it
-  json.data.data = decode(Buffer.from(json.data.data, 'base64').toString('hex'))
+  json.payload.data = decode(Buffer.from(json.payload.data, 'base64').toString('hex'))
   const output_payload = formatPayload(json)
   if (EGRESS_URL!==''){
     const callRes = await fetch(EGRESS_URL, {
