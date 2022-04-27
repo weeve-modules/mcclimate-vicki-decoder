@@ -45,13 +45,13 @@ app.get('/health', async (req, res) => {
 //main post listener
 app.post('/', async (req, res) => {
   let json = req.body
-  if (typeof json.payload==='undefined') {
+  if (typeof json.payload === 'undefined') {
     return res.status(400).json({ status: false, message: 'Payload structure is not valid.' })
   }
   // parse data property, and update it
   json.payload.data = decode(Buffer.from(json.payload.data, 'base64').toString('hex'))
   const output_payload = formatPayload(json)
-  if (EGRESS_URL!==''){
+  if (EGRESS_URL !== '') {
     const callRes = await fetch(EGRESS_URL, {
       method: 'POST',
       headers: {
@@ -63,9 +63,8 @@ app.post('/', async (req, res) => {
       return res.status(500).json({ status: false, message: `Error passing response data to ${EGRESS_URL}` })
     }
     return res.status(200).json({ status: true, message: 'Payload processed' })
-  } else
-  {
-    return res.status(200).json(output_payload);
+  } else {
+    return res.status(200).json(output_payload)
   }
 })
 

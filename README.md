@@ -1,13 +1,11 @@
 # McClimate Vicki Decoder
 
-|                |                                 |
-| -------------- | ------------------------------- |
-| Name           | McClimate Vicki Decoder               |
-| Version        | v1.0.0                          |
+|  |  |
+| --- | --- |
+| Name | McClimate Vicki Decoder |
+| Version | v1.0.0 |
 | Dockerhub Link | [weevenetwork/mcclimate-vicki-decoder](https://hub.docker.com/r/weevenetwork/mcclimate-vicki-decoder) |
-| Authors        | Mesud Pasic                     |
-
-
+| Authors | Mesud Pasic |
 
 - [MQTT Ingress](#mcclimate-decoder)
   - [Description](#description)
@@ -17,13 +15,10 @@
     - [Set by the weeve Agent on the edge-node](#set-by-the-weeve-agent-on-the-edge-node)
   - [Dependencies](#dependencies)
 
-
-
-
 ## Description
 
-Decode Vicki LoRaWAN's payload into human-friendly format. 
-You'll be able to retrieve:
+Decode Vicki LoRaWAN's payload into human-friendly format. You'll be able to retrieve:
+
 - Target Temperature
 - Measured temperature and humidity
 - motorPosition and motorRange
@@ -34,6 +29,7 @@ You'll be able to retrieve:
 - Battery voltage
 
 - Incoming payload looks like this
+
 ```js
 {
   "data": {
@@ -90,6 +86,7 @@ You'll be able to retrieve:
 ```
 
 - Decoded output passed to next module via POST call will look like this
+
 ```js
 {
    "data":{
@@ -160,6 +157,7 @@ You'll be able to retrieve:
 
 - Depending on environment variables NESTED_RESPONSE & CUSTOM_FIELDS out can be nestd with few fields or with all fields in "data" property, for example:
 - - when nested without custom fields
+
 ```js
 {
   timestamp: '1647945089527',
@@ -181,18 +179,22 @@ You'll be able to retrieve:
   }
 }
 ```
+
 - - when nested with custom fields
+
 ```js
 {
   timestamp: '1647945089527',
   devEUI: '70b3d52dd3003e30',
   deviceName: '70B3D52DD3003E30',
-  data: {    
-    targetTemperature: 0,    
+  data: {
+    targetTemperature: 0,
   }
 }
 ```
+
 - - when not nested without custom fields
+
 ```js
 {
   timestamp: '1647945089527',
@@ -214,12 +216,13 @@ You'll be able to retrieve:
 ```
 
 - - when nested without custom fields
+
 ```js
 {
   timestamp: '1647945089527',
   devEUI: '70b3d52dd3003e30',
   deviceName: '70B3D52DD3003E30',
-  data: {    
+  data: {
     reason: 1,
     targetTemperature: 0,
     sensorTemperature: 12.8515625,
@@ -237,43 +240,43 @@ You'll be able to retrieve:
 ```
 
 - - when nested with custom fields
+
 ```js
 {
   timestamp: '1647945089527',
   devEUI: '70b3d52dd3003e30',
   deviceName: '70B3D52DD3003E30',
-  data: {    
-    targetTemperature: 0,    
+  data: {
+    targetTemperature: 0,
   }
 }
 ```
+
 ## Features
 
-* Parsing Melita.io data for thermostat
-* Sends data to next module service via REST API
+- Parsing Melita.io data for thermostat
+- Sends data to next module service via REST API
 
 ## Environment Variables
 
-* EGRESS_URL
-* INGRESS_HOST
-* INGRESS_PORT
-* NESTED_RESPONSE
-* CUSTOM_FIELDS
+- EGRESS_URL
+- INGRESS_HOST
+- INGRESS_PORT
+- NESTED_RESPONSE
+- CUSTOM_FIELDS
 
 ### Module Specific
 
 ### Set by the weeve Agent on the edge-node
 
-| Environment Variables | type   | Description                            |
-| --------------------- | ------ | -------------------------------------- |
-| EGRESS_URL       | string | HTTP ReST endpoint for the next module |
-| MODULE_NAME           | string | Name of the module                     |
-| INGRESS_HOST           | string | Host where app is running              |
-| INGRESS_PORT           | string | Port where app is running              |
-| NESTED_RESPONSE     | string | yes/no enum type, determines if sensor "date" property will be passed in data property or if properties will be extracted as single items and passed with rest of the payload|
-| CUSTOM_FIELDS     | string | comma separated names of fields that user wants to pass to next module, if ommited, all fields from "data" property will be passed|
-
-
+| Environment Variables | type | Description |
+| --- | --- | --- |
+| EGRESS_URL | string | HTTP ReST endpoint for the next module |
+| MODULE_NAME | string | Name of the module |
+| INGRESS_HOST | string | Host where app is running |
+| INGRESS_PORT | string | Port where app is running |
+| NESTED_RESPONSE | string | yes/no enum type, determines if sensor "date" property will be passed in data property or if properties will be extracted as single items and passed with rest of the payload |
+| CUSTOM_FIELDS | string | comma separated names of fields that user wants to pass to next module, if ommited, all fields from "data" property will be passed |
 
 ## Dependencies
 
