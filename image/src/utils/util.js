@@ -1,8 +1,12 @@
 const { NESTED_RESPONSE, CUSTOM_FIELDS } = require('../config/config')
 const formatPayload = json => {
+  let t = null
+  if (json.payload.rxInfo[0]['time'].toString() == parseInt(json.payload.rxInfo[0]['time']).toString())
+    t = new Date(parseInt(json.payload.rxInfo[0]['time'])).getTime()
+  else t = new Date(json.payload.rxInfo[0]['time']).getTime()
   let output = {
     //convert ISO date time to timestamp
-    timestamp: new Date(parseInt(json.payload.rxInfo[0]['time'])).getTime(),
+    timestamp: t,
     devEUI: json.payload['devEUI'],
     deviceName: json.payload['deviceName'],
   }
