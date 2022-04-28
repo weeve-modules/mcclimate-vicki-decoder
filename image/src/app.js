@@ -45,12 +45,20 @@ app.get('/health', async (req, res) => {
 //main post listener
 app.post('/', async (req, res) => {
   let json = req.body
+  //for some reason melita is sending JSON structure from payload, and not payload property
+  // so to be sure, we will support both
+  if (!json) {
+    return res.status(400).json({ status: false, message: 'Payload not provided.' })
+  }
+  input_json = {}
   if (typeof json.payload === 'undefined') {
-    return res.status(400).json({ status: false, message: 'Payload structure is not valid.' })
+    input_json = json
+  } else {
+    input_json = json.payload
   }
   // parse data property, and update it
-  json.payload.data = decode(Buffer.from(json.payload.data, 'base64').toString('hex'))
-  const output_payload = formatPayload(json)
+  input_json.data = decode(Buffer.from(input_json.data, 'base64').toString('hex'))
+  const output_payload = formatPayload(input_json)
   if (EGRESS_URL !== '') {
     const callRes = await fetch(EGRESS_URL, {
       method: 'POST',
