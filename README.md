@@ -259,7 +259,6 @@ Decode Vicki LoRaWAN's payload into human-friendly format. You'll be able to ret
 
 ## Environment Variables
 
-- EGRESS_URL
 - INGRESS_HOST
 - INGRESS_PORT
 - NESTED_RESPONSE
@@ -271,7 +270,6 @@ Decode Vicki LoRaWAN's payload into human-friendly format. You'll be able to ret
 
 | Environment Variables | type | Description |
 | --- | --- | --- |
-| EGRESS_URL | string | HTTP ReST endpoint for the next module |
 | MODULE_NAME | string | Name of the module |
 | INGRESS_HOST | string | Host where app is running |
 | INGRESS_PORT | string | Port where app is running |
