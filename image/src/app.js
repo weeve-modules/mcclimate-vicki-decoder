@@ -56,10 +56,13 @@ app.post('/', async (req, res) => {
   } else {
     input_json = json.payload
   }
+  if (typeof input_json.data === 'undefined') {
+    return res.status(500).json({ status: false, message: `Error processing payload: ${input_json}` })
+  }
   // parse data property, and update it
   input_json.data = decode(Buffer.from(input_json.data, 'base64').toString('hex'))
   // decode deviceEUI
-  input_json.devEUI=Buffer.from(input_json.devEUI, 'base64').toString('hex')  
+  input_json.devEUI = Buffer.from(input_json.devEUI, 'base64').toString('hex')
   const output_payload = formatPayload(input_json)
   if (EGRESS_URL !== '') {
     const callRes = await fetch(EGRESS_URL, {
