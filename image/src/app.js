@@ -9,8 +9,18 @@ const { decode } = require('./utils/decoder')
 const { formatPayload, formatTimeDiff } = require('./utils/util')
 
 //initialization
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(
+  express.json({
+    verify: (req, res, buf, encoding) => {
+      try {
+        JSON.parse(buf)
+      } catch (e) {
+        res.status(400).json({ status: false, message: 'Invalid payload provided.' })
+      }
+    },
+  })
+)
 
 //logger
 app.use(
