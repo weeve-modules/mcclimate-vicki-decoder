@@ -58,6 +58,8 @@ app.post('/', async (req, res) => {
   }
   // parse data property, and update it
   input_json.data = decode(Buffer.from(input_json.data, 'base64').toString('hex'))
+  // decode deviceEUI
+  input_json.devEUI=Buffer.from(input_json.devEUI, 'base64').toString('hex')  
   const output_payload = formatPayload(input_json)
   if (EGRESS_URL !== '') {
     const callRes = await fetch(EGRESS_URL, {
