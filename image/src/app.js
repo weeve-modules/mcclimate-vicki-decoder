@@ -1,7 +1,6 @@
 const { EGRESS_URL, INGRESS_HOST, INGRESS_PORT, MODULE_NAME } = require('./config/config.js')
 const fetch = require('node-fetch')
 const express = require('express')
-const bodyParser = require('body-parser')
 const app = express()
 const winston = require('winston')
 const expressWinston = require('express-winston')
