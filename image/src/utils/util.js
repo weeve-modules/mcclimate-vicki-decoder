@@ -20,7 +20,9 @@ const formatPayload = json => {
   //not nested, no custom fields
   if (fields.length == 0 && NESTED_RESPONSE == 'no') {
     Object.keys(json.data).forEach(key => {
-      output[key] = json.data[key]
+      if (json.data[key] === false) output[key] = 'false'
+      else if (json.data[key] === true) output[key] = 'true'
+      else output[key] = json.data[key]
     })
   }
   //nested, no custom fields
@@ -32,7 +34,9 @@ const formatPayload = json => {
     let keys = Object.keys(json.data)
     fields.forEach(field => {
       if (keys.indexOf(field) !== -1) {
-        output[field] = json.data[field]
+        if (json.data[field] === false) output[field] = 'false'
+        else if (json.data[field] === true) output[field] = 'true'
+        else output[field] = json.data[field]
       }
     })
   }
@@ -42,7 +46,9 @@ const formatPayload = json => {
     output['data'] = {}
     fields.forEach(field => {
       if (keys.indexOf(field) !== -1) {
-        output['data'][field] = json.data[field]
+        if (json.data[field] === false) output['data'][field] = 'false'
+        else if (json.data[field] === true) output['data'][field] = 'true'
+        else output['data'][field] = json.data[field]
       }
     })
   }
