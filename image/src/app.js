@@ -6,7 +6,7 @@ const winston = require('winston')
 const expressWinston = require('express-winston')
 const { decode } = require('./utils/decoder')
 const { formatPayload, formatTimeDiff } = require('./utils/util')
-const fs = require('fs');
+const fs = require('fs')
 
 //initialization
 app.use(express.urlencoded({ extended: true }))
@@ -69,18 +69,18 @@ app.post('/', async (req, res) => {
   if (typeof input_json.data === 'undefined') {
     return res.status(500).json({ status: false, message: `Error processing payload: ${input_json}` })
   }
-  let log_output={};
-  log_output.incoming=Object.assign({},input_json);
+  let log_output = {}
+  log_output.incoming = Object.assign({}, input_json)
   // parse data property, and update it
   input_json.data = decode(Buffer.from(input_json.data, 'base64').toString('hex'))
   // decode deviceEUI
   input_json.devEUI = Buffer.from(input_json.devEUI, 'base64').toString('hex')
   const output_payload = formatPayload(input_json)
-  log_output.outgoing=output_payload;
-  if (DEBUG_OUTPUT_LOG=='yes'){
-    let d=new Date();
-    let filename=`${d.getFullYear()}_${d.getMonth()+1}_${d.getDate()}_${d.getHours()}.txt`;
-    fs.appendFileSync(filename, `${JSON.stringify(log_output)}\n`);
+  log_output.outgoing = output_payload
+  if (DEBUG_OUTPUT_LOG == 'yes') {
+    let d = new Date()
+    let filename = `${d.getFullYear()}_${d.getMonth() + 1}_${d.getDate()}_${d.getHours()}.txt`
+    fs.appendFileSync(filename, `${JSON.stringify(log_output)}\n`)
   }
   if (EGRESS_URL !== '') {
     const callRes = await fetch(EGRESS_URL, {
