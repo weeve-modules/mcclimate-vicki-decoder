@@ -7,5 +7,5 @@ module.exports = {
   NESTED_RESPONSE: env('NESTED_RESPONSE', 'no'),
   CUSTOM_FIELDS: env('CUSTOM_FIELDS', ''),
   MODULE_NAME: env('MODULE_NAME', 'McClimate Vicki Decoder'),
-  DEBUG_OUTPUT_LOG: env('DEBUG_OUTPUT_LOG', 'yes'),
+  DEBUG_OUTPUT_LOG: env('DEBUG_OUTPUT_LOG', 'no'),
 }
