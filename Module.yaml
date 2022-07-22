@@ -12,19 +12,19 @@ image:
   homepage: 'https://hub.docker.com/weevenetwork/mcclimate-vicki-decoder'      # Image homepage from the docker registry.
 repository: 'https://github.com/weeve-modules/mcclimate-vicki-decoder'     # Repository URL to source code.
 envs:                                   # Array of environment variables that will be used to configure the module. Also used to show related fields on the UI.
-  - key: NESTED_RESPONSE
+  - name: Nested response
+    key: NESTED_RESPONSE
     description: Should output response be a nested structure ?
     value: 'no'    
     type: 'select'
     options:
       - yes
       - no
-    name: Nested response
-  - key: CUSTOM_FIELDS
+  - name: Custom fields in response
+    key: CUSTOM_FIELDS
     description: List of comma (,) separated fields that should be sent in response, if ommited, all fields are sent.
     value: ''
-    type: string
-    name: Custom fields in response
+    type: 'text'
 ports:                                  # Array of ports that will be exposed by the module.
   - container: 8080                     # Port number from the container.
     host: 8080                          # Port number to map on the host.
