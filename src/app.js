@@ -6,9 +6,8 @@ const winston = require('winston')
 const expressWinston = require('express-winston')
 const { decode } = require('./utils/decoder')
 const { formatPayload, formatTimeDiff } = require('./utils/util')
-const fs = require('fs')
 
-//initialization
+// initialization
 app.use(express.urlencoded({ extended: true }))
 app.use(
   express.json({
@@ -22,7 +21,7 @@ app.use(
   })
 )
 
-//logger
+// logger
 app.use(
   expressWinston.logger({
     transports: [
@@ -44,7 +43,7 @@ app.use(
   })
 )
 const startTime = Date.now()
-//health check
+// health check
 app.get('/health', async (req, res) => {
   res.json({
     serverStatus: 'Running',
@@ -52,15 +51,15 @@ app.get('/health', async (req, res) => {
     module: MODULE_NAME,
   })
 })
-//main post listener
+// main post listener
 app.post('/', async (req, res) => {
-  let json = req.body
-  //for some reason melita is sending JSON structure from payload, and not payload property
+  const json = req.body
+  // for some reason melita is sending JSON structure from payload, and not payload property
   // so to be sure, we will support both
   if (!json) {
     return res.status(400).json({ status: false, message: 'Payload not provided.' })
   }
-  input_json = {}
+  let input_json = {}
   if (typeof json.payload === 'undefined') {
     input_json = json
   } else {
@@ -91,12 +90,12 @@ app.post('/', async (req, res) => {
   }
 })
 
-//handle exceptions
+// handle exceptions
 app.use(async (err, req, res, next) => {
   if (res.headersSent) {
     return next(err)
   }
-  let errCode = err.status || 401
+  const errCode = err.status || 401
   res.status(errCode).send({
     status: false,
     message: err.message,
