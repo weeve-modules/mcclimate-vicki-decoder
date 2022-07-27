@@ -259,22 +259,20 @@ Decode Vicki LoRaWAN's payload into human-friendly format. You'll be able to ret
 
 ## Environment Variables
 
-- INGRESS_HOST
-- INGRESS_PORT
-- NESTED_RESPONSE
-- CUSTOM_FIELDS
+| Environment Variables | type | Description |
+| --- | --- | --- |
+| NESTED_RESPONSE | string | yes/no enum type, determines if sensor "date" property will be passed in data property or if properties will be extracted as single items and passed with rest of the payload |
+| CUSTOM_FIELDS | string | comma separated names of fields that user wants to pass to next module, if ommited, all fields from "data" property will be passed |
 
 ### Module Specific
 
 ### Set by the weeve Agent on the edge-node
 
-| Environment Variables | type | Description |
-| --- | --- | --- |
-| MODULE_NAME | string | Name of the module |
-| INGRESS_HOST | string | Host where app is running |
-| INGRESS_PORT | string | Port where app is running |
-| NESTED_RESPONSE | string | yes/no enum type, determines if sensor "date" property will be passed in data property or if properties will be extracted as single items and passed with rest of the payload |
-| CUSTOM_FIELDS | string | comma separated names of fields that user wants to pass to next module, if ommited, all fields from "data" property will be passed |
+| Environment Variables | type   | Description               |
+| --------------------- | ------ | ------------------------- |
+| MODULE_NAME           | string | Name of the module        |
+| INGRESS_HOST          | string | Host where app is running |
+| INGRESS_PORT          | string | Port where app is running |
 
 ## Dependencies
 

@@ -1,40 +1,40 @@
-version: 1.0.1
-name: McClimate Vicki Decoder
-description: Decoder for McClimate Vicki Decoder v1.0.1
-icon: https://icons-020-demo.s3.eu-central-1.amazonaws.com/mi_m-climate_process.png
-type: process
-tags:
-  - McClimate
-  - Vicki
-  - Decoder
-categories:
-  - id: category
-    name: Decoder
+displayName: 'McClimate Vicki Decoder'       # Display name for the module that will be displayed in the UI.
+moduleName: 'mcclimate-vicki-decoder'        # Module name that will be used to reference the module, and uniquely identify the module and their versions.
+description: 'Decoder for McClimate Vicki Decoder.'       # Module description that will be displayed in the UI.
+versionName: 'v1.0.0'                    # Module version name that will be used to reference the module version, and uniquely identify the module version with a common name.
+isPublic: true                          # Boolean value that indicates if the module is Public or Private.
+categories:                             # Array of category that will be used to group the module in the UI.
+  - 'McClimate'
+type: 'Processing'      # Module type (Input, Processing, Output) that will be used to group the module in the UI.
 image:
-  name: weevenetwork/mcclimate-vicki-decoder
-  tag: latest
-environments:
-  - key: NESTED_RESPONSE
+  name: 'weevenetwork/mcclimate-vicki-decoder'     # Image name from the docker registry.
+  tag: 'v1.0.0'                               # Image tag from the docker registry.
+  homepage: 'https://hub.docker.com/weevenetwork/mcclimate-vicki-decoder'      # Image homepage from the docker registry.
+repository: 'https://github.com/weeve-modules/mcclimate-vicki-decoder'     # Repository URL to source code.
+envs:                                   # Array of environment variables that will be used to configure the module. Also used to show related fields on the UI.
+  - name: Nested response
+    key: NESTED_RESPONSE
     description: Should output response be a nested structure ?
-    value: ''
-    default: no
-    type: enum
+    value: 'no'    
+    type: 'select'
     options:
       - yes
       - no
-    name: Nested response
-  - key: CUSTOM_FIELDS
+  - name: Custom fields in response
+    key: CUSTOM_FIELDS
     description: List of comma (,) separated fields that should be sent in response, if ommited, all fields are sent.
     value: ''
-    default: ''
-    type: string
-    name: Custom fields in response
-commands: []
-document:
-  ports: []
-  volumes: []
-  restart_policy:
-    condition: on-failure
-    delay: 10s
-    max_attempts: 3
-    window: 120s
+    type: 'text'
+ports:                                  # Array of ports that will be exposed by the module.
+  - container: 8080                     # Port number from the container.
+    host: 8080                          # Port number to map on the host.
+mounts:
+  - container: '/data'                  # Mount path from the container.
+    host: '/data'                       # Mount path to map on the host.
+tags:                                   # Array of tags.
+  - 'NodeJS'
+  - 'Processing'
+  - 'McClimate'
+  - 'Decoder'
+  - 'Boilerplate 1.0.0'
+icon: 'https://icons-020-demo.s3.eu-central-1.amazonaws.com/mi_m-climate_process.png'    # Icon URL that will be displayed in the UI.

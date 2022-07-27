@@ -1,0 +1,16 @@
+version: "3.0"
+services:
+  mcclimate-vicki-decoder:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    environment:
+      MODULE_NAME: "McClimate Vicki Decoder"
+      MODULE_TYPE: "Processing"
+      EGRESS_URLS: "https://testdockercompose.free.beeceptor.com"
+      INGRESS_HOST: "0.0.0.0"
+      INGRESS_PORT: "80"
+      CUSTOM_FIELDS: ''
+      NESTED_RESPONSE: 'no'
+    ports:
+      - 80:80
