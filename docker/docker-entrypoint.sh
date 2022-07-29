@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # More safety, by turning some bugs into errors.
 # Without `errexit` you don’t need ! and can replace
 # PIPESTATUS with a simple $?, but I don’t do that.
