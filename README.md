@@ -4,7 +4,7 @@
 | --- | --- |
 | Name | McClimate Vicki Decoder |
 | Version | v1.0.0 |
-| Dockerhub Link | [weevenetwork/mcclimate-vicki-decoder](https://hub.docker.com/r/weevenetwork/mcclimate-vicki-decoder) |
+| DockerHub | [weevenetwork/mcclimate-vicki-decoder](https://hub.docker.com/r/weevenetwork/mcclimate-vicki-decoder) |
 | Authors | Mesud Pasic |
 
 - [MQTT Ingress](#mcclimate-decoder)
@@ -271,8 +271,10 @@ Decode Vicki LoRaWAN's payload into human-friendly format. You'll be able to ret
 | Environment Variables | type   | Description               |
 | --------------------- | ------ | ------------------------- |
 | MODULE_NAME           | string | Name of the module        |
+| MODULE_TYPE           | string | Type of the module (Input, Processing, Output)    |
 | INGRESS_HOST          | string | Host where app is running |
 | INGRESS_PORT          | string | Port where app is running |
+| EGRESS_URLS           | string | HTTP ReST endpoint for the next module            |
 
 ## Dependencies
 
