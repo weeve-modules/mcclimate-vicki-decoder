@@ -16,16 +16,19 @@ envs:                                   # Array of environment variables that wi
   - name: Nested response
     key: NESTED_RESPONSE
     description: Should output response be a nested structure ?
-    value: 'no'    
+    value: 'no'
     type: 'select'
     options:
       - yes
       - no
+    dependencies: []
   - name: Custom fields in response
     key: CUSTOM_FIELDS
     description: List of comma (,) separated fields that should be sent in response, if ommited, all fields are sent.
     value: ''
     type: 'text'
+    options: []
+    dependencies: []
 ports:                                  # Array of ports that will be exposed by the module.
   - container: 8080                     # Port number from the container.
     host: 8080                          # Port number to map on the host.
