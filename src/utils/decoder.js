@@ -3,6 +3,8 @@ Decoder documentation:
 https://docs.mclimate.eu/mclimate-lorawan-devices/devices/mclimate-vicki-lorawan/vicki-uplink-decoder#recommended-decoder-javascript-es6
 
 */
+const { EGRESS_URLS } = require('../config/config')
+const fetch = require('node-fetch')
 const deviceData = {}
 function decode(hexData) {
   const toBool = value => value == '1'
@@ -244,6 +246,33 @@ function decode(hexData) {
   }
 }
 
+const send = async result => {
+  if (EGRESS_URLS) {
+    const urls = []
+    const eUrls = EGRESS_URLS.replace(/ /g, '')
+    urls.push(...eUrls.split(','))
+    urls.forEach(async url => {
+      if (url) {
+        try {
+          const callRes = await fetch(url, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(result),
+          })
+          if (!callRes.ok) {
+            console.error(`Error passing response data to ${url}, status: ${callRes.status}`)
+          }
+        } catch (e) {
+          console.error(`Error making request to: ${url}, error: ${e.message}`)
+        }
+      }
+    })
+  }
+}
+
 module.exports = {
   decode,
+  send,
 }

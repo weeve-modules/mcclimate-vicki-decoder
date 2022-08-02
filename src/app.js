@@ -1,10 +1,9 @@
 const { EGRESS_URLS, INGRESS_HOST, INGRESS_PORT, MODULE_NAME } = require('./config/config.js')
-const fetch = require('node-fetch')
 const express = require('express')
 const app = express()
 const winston = require('winston')
 const expressWinston = require('express-winston')
-const { decode } = require('./utils/decoder')
+const { decode, send } = require('./utils/decoder')
 const { formatPayload } = require('./utils/util')
 
 // initialization
@@ -65,27 +64,7 @@ app.post('/', async (req, res) => {
   inputPayload.devEUI = Buffer.from(inputPayload.devEUI, 'base64').toString('hex')
   const outputPayload = formatPayload(inputPayload)
   if (EGRESS_URLS) {
-    const urls = []
-    const eUrls = EGRESS_URLS.replace(/ /g, '')
-    if (eUrls.indexOf(',') !== -1) {
-      urls.push(...eUrls.split(','))
-    } else {
-      urls.push(eUrls)
-    }
-    urls.forEach(async url => {
-      if (url) {
-        const callRes = await fetch(url, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(outputPayload),
-        })
-        if (!callRes.ok) {
-          console.error(`Error passing response data to ${url}`)
-        }
-      }
-    })
+    await send(outputPayload)
     return res.status(200).json({ status: true, message: 'Payload processed' })
   } else {
     return res.status(200).json(outputPayload)
