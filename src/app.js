@@ -1,11 +1,10 @@
 const { EGRESS_URLS, INGRESS_HOST, INGRESS_PORT, MODULE_NAME } = require('./config/config.js')
-const fetch = require('node-fetch')
 const express = require('express')
 const app = express()
 const winston = require('winston')
 const expressWinston = require('express-winston')
-const { decode } = require('./utils/decoder')
-const { formatPayload, formatTimeDiff } = require('./utils/util')
+const { decode, send } = require('./utils/decoder')
+const { formatPayload } = require('./utils/util')
 
 // initialization
 app.use(express.urlencoded({ extended: true }))
@@ -42,15 +41,6 @@ app.use(
     }, // optional: allows to skip some log messages based on request and/or response
   })
 )
-const startTime = Date.now()
-// health check
-app.get('/health', async (req, res) => {
-  res.json({
-    serverStatus: 'Running',
-    uptime: formatTimeDiff(Date.now(), startTime),
-    module: MODULE_NAME,
-  })
-})
 // main post listener
 app.post('/', async (req, res) => {
   const json = req.body
@@ -59,34 +49,25 @@ app.post('/', async (req, res) => {
   if (!json) {
     return res.status(400).json({ status: false, message: 'Payload not provided.' })
   }
-  let input_json = {}
+  let inputPayload = {}
   if (typeof json.payload === 'undefined') {
-    input_json = json
+    inputPayload = json
   } else {
-    input_json = json.payload
+    inputPayload = json.payload
   }
-  if (typeof input_json.data === 'undefined') {
-    return res.status(500).json({ status: false, message: `Error processing payload: ${input_json}` })
+  if (typeof inputPayload.data === 'undefined') {
+    return res.status(500).json({ status: false, message: `Error processing payload: ${inputPayload}` })
   }
   // parse data property, and update it
-  input_json.data = decode(Buffer.from(input_json.data, 'base64').toString('hex'))
+  inputPayload.data = decode(Buffer.from(inputPayload.data, 'base64').toString('hex'))
   // decode deviceEUI
-  input_json.devEUI = Buffer.from(input_json.devEUI, 'base64').toString('hex')
-  const output_payload = formatPayload(input_json)
+  inputPayload.devEUI = Buffer.from(inputPayload.devEUI, 'base64').toString('hex')
+  const outputPayload = formatPayload(inputPayload)
   if (EGRESS_URLS) {
-    const callRes = await fetch(EGRESS_URLS, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(output_payload),
-    })
-    if (!callRes.ok) {
-      return res.status(500).json({ status: false, message: `Error passing response data to ${EGRESS_URLS}` })
-    }
+    await send(outputPayload)
     return res.status(200).json({ status: true, message: 'Payload processed' })
   } else {
-    return res.status(200).json(output_payload)
+    return res.status(200).json(outputPayload)
   }
 })
 

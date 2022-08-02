@@ -1,11 +1,11 @@
 # McClimate Vicki Decoder
 
-|  |  |
-| --- | --- |
-| Name | McClimate Vicki Decoder |
-| Version | v1.0.0 |
+|           |                                                                                                       |
+| --------- | ----------------------------------------------------------------------------------------------------- |
+| Name      | McClimate Vicki Decoder                                                                               |
+| Version   | v1.0.0                                                                                                |
 | DockerHub | [weevenetwork/mcclimate-vicki-decoder](https://hub.docker.com/r/weevenetwork/mcclimate-vicki-decoder) |
-| Authors | Mesud Pasic |
+| Authors   | Mesud Pasic                                                                                           |
 
 - [MQTT Ingress](#mcclimate-decoder)
   - [Description](#description)
@@ -268,13 +268,13 @@ Decode Vicki LoRaWAN's payload into human-friendly format. You'll be able to ret
 
 ### Set by the weeve Agent on the edge-node
 
-| Environment Variables | type   | Description               |
-| --------------------- | ------ | ------------------------- |
-| MODULE_NAME           | string | Name of the module        |
-| MODULE_TYPE           | string | Type of the module (Input, Processing, Output)    |
-| INGRESS_HOST          | string | Host where app is running |
-| INGRESS_PORT          | string | Port where app is running |
-| EGRESS_URLS           | string | HTTP ReST endpoint for the next module            |
+| Environment Variables | type   | Description                                    |
+| --------------------- | ------ | ---------------------------------------------- |
+| MODULE_NAME           | string | Name of the module                             |
+| MODULE_TYPE           | string | Type of the module (Input, Processing, Output) |
+| INGRESS_HOST          | string | Host where app is running                      |
+| INGRESS_PORT          | string | Port where app is running                      |
+| EGRESS_URLS           | string | HTTP ReST endpoint for the next module         |
 
 ## Dependencies
 
