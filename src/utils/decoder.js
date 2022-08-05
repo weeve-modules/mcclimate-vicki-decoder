@@ -7,7 +7,7 @@ const { EGRESS_URLS } = require('../config/config')
 const fetch = require('node-fetch')
 const deviceData = {}
 function decode(hexData) {
-  const toBool = value => value == '1'
+  const toBool = value => value === '1'
   const decbin = number => {
     if (number < 0) {
       number = 0xffffffff + number + 1
@@ -37,10 +37,10 @@ function decode(hexData) {
     const brokenSensor = byteBin.substr(-4, 1)
 
     let sensorTemp
-    if (byteArray[0] == 1) {
+    if (byteArray[0] === 1) {
       sensorTemp = (byteArray[2] * 165) / 256 - 40
     }
-    if (byteArray[0] == 129) {
+    if (byteArray[0] === 129) {
       sensorTemp = (byteArray[2] - 28.33333) / 5.66666
     }
 
@@ -66,35 +66,36 @@ function decode(hexData) {
     const byteArray = hexData.match(/.{1,2}/g).map(byte => {
       return parseInt(byte, 16)
     })
-    if (byteArray[0] == 1 || byteArray[0] == 129) {
+    if (byteArray[0] === 1 || byteArray[0] === 129) {
       // its a keeapalive
       handleKeepAliveData(byteArray)
     } else {
       const resultToPass = {}
       const data = hexData.slice(0, -18)
       const commands = data.match(/.{1,2}/g)
-      let command_len = 0
+      let commandLen = 0
       // console.log(data)
 
+      // eslint-disable-next-line array-callback-return
       commands.map((command, i) => {
         switch (command) {
           case '04':
             {
-              command_len = 2
+              commandLen = 2
               const data = { deviceVersions: { hardware: Number(commands[i + 1]), software: Number(commands[i + 2]) } }
               Object.assign(resultToPass, { ...resultToPass }, { ...data })
             }
             break
           case '12':
             {
-              command_len = 1
+              commandLen = 1
               const data = { keepAliveTime: parseInt(commands[i + 1], 16) }
               Object.assign(resultToPass, { ...resultToPass }, { ...data })
             }
             break
           case '13':
             {
-              command_len = 4
+              commandLen = 4
               const enabled = toBool(parseInt(commands[i + 1], 16))
               const duration = parseInt(commands[i + 2], 16) * 5
               const tmp = ('0' + commands[i + 4].toString(16)).substr(-2)
@@ -111,14 +112,14 @@ function decode(hexData) {
             break
           case '14':
             {
-              command_len = 1
+              commandLen = 1
               const data = { childLock: toBool(parseInt(commands[i + 1], 16)) }
               Object.assign(resultToPass, { ...resultToPass }, { ...data })
             }
             break
           case '15':
             {
-              command_len = 2
+              commandLen = 2
               const data = {
                 temperatureRangeSettings: { min: parseInt(commands[i + 1], 16), max: parseInt(commands[i + 2], 16) },
               }
@@ -127,7 +128,7 @@ function decode(hexData) {
             break
           case '16':
             {
-              command_len = 3
+              commandLen = 3
               const data = {
                 internalAlgoParams: {
                   period: parseInt(commands[i + 1], 16),
@@ -140,7 +141,7 @@ function decode(hexData) {
             break
           case '17':
             {
-              command_len = 2
+              commandLen = 2
               const data = {
                 internalAlgoTdiffParams: { warm: parseInt(commands[i + 1], 16), cold: parseInt(commands[i + 2], 16) },
               }
@@ -149,14 +150,14 @@ function decode(hexData) {
             break
           case '18':
             {
-              command_len = 1
+              commandLen = 1
               const data = { operationalMode: commands[i + 1].toString() }
               Object.assign(resultToPass, { ...resultToPass }, { ...data })
             }
             break
           case '19':
             {
-              command_len = 1
+              commandLen = 1
               const commandResponse = parseInt(commands[i + 1], 16)
               const periodInMinutes = (commandResponse * 5) / 60
               const data = { joinRetryPeriod: periodInMinutes }
@@ -165,31 +166,31 @@ function decode(hexData) {
             break
           case '1b':
             {
-              command_len = 1
+              commandLen = 1
               const data = { uplinkType: commands[i + 1] }
               Object.assign(resultToPass, { ...resultToPass }, { ...data })
             }
             break
           case '1d':
             {
-              command_len = 2
+              commandLen = 2
               const deviceKeepAlive = deviceData.keepAliveTime ? deviceData.keepAliveTime : 5
-              const wdpC = commands[i + 1] == '00' ? false : commands[i + 1] * deviceKeepAlive + 7
-              const wdpUc = commands[i + 2] == '00' ? false : parseInt(commands[i + 2], 16)
+              const wdpC = commands[i + 1] === '00' ? false : commands[i + 1] * deviceKeepAlive + 7
+              const wdpUc = commands[i + 2] === '00' ? false : parseInt(commands[i + 2], 16)
               const data = { watchDogParams: { wdpC, wdpUc } }
               Object.assign(resultToPass, { ...resultToPass }, { ...data })
             }
             break
           case '1f':
             {
-              command_len = 1
+              commandLen = 1
               const data = { primaryOperationalMode: commands[i + 1] }
               Object.assign(resultToPass, { ...resultToPass }, { ...data })
             }
             break
           case '21':
             {
-              command_len = 6
+              commandLen = 6
               const data = {
                 batteryRangesBoundaries: {
                   Boundary1: parseInt(`${commands[i + 1]}${commands[i + 2]}`, 16),
@@ -202,7 +203,7 @@ function decode(hexData) {
             break
           case '23':
             {
-              command_len = 4
+              commandLen = 4
               const data = {
                 batteryRangesOverVoltage: {
                   Range1: parseInt(commands[i + 2], 16),
@@ -215,20 +216,20 @@ function decode(hexData) {
             break
           case '27':
             {
-              command_len = 1
+              commandLen = 1
               const data = { OVAC: parseInt(commands[i + 1], 16) }
               Object.assign(resultToPass, { ...resultToPass }, { ...data })
             }
             break
           case '28':
             {
-              command_len = 1
+              commandLen = 1
               const data = { manualTargetTemperatureUpdate: parseInt(commands[i + 1], 16) }
               Object.assign(resultToPass, { ...resultToPass }, { ...data })
             }
             break
         }
-        commands.splice(i, command_len)
+        commands.splice(i, commandLen)
       })
 
       Object.assign(deviceData, { ...deviceData }, { ...resultToPass })

@@ -4,7 +4,7 @@ const formatPayload = json => {
   if (!json.rxInfo[0].time) {
     t = Date.now()
   } else {
-    if (json.rxInfo[0].time.toString() == parseInt(json.rxInfo[0].time).toString())
+    if (json.rxInfo[0].time.toString() === parseInt(json.rxInfo[0].time).toString())
       t = new Date(parseInt(json.rxInfo[0].time)).getTime()
     else t = new Date(json.rxInfo[0].time).getTime()
   }
@@ -18,7 +18,7 @@ const formatPayload = json => {
   if (CUSTOM_FIELDS !== '' && CUSTOM_FIELDS.indexOf(',') !== -1) fields = CUSTOM_FIELDS.trim().split(',')
   else if (CUSTOM_FIELDS !== '') fields.push(CUSTOM_FIELDS)
   // not nested, no custom fields
-  if (fields.length == 0 && NESTED_RESPONSE == 'no') {
+  if (fields.length === 0 && NESTED_RESPONSE === 'no') {
     Object.keys(json.data).forEach(key => {
       if (json.data[key] === false) output[key] = 'false'
       else if (json.data[key] === true) output[key] = 'true'
@@ -26,11 +26,11 @@ const formatPayload = json => {
     })
   }
   // nested, no custom fields
-  if (fields.length == 0 && NESTED_RESPONSE == 'yes') {
+  if (fields.length === 0 && NESTED_RESPONSE === 'yes') {
     output.data = json.data
   }
   // not nested, with custom fields
-  if (fields.length != 0 && NESTED_RESPONSE == 'no') {
+  if (fields.length !== 0 && NESTED_RESPONSE === 'no') {
     const keys = Object.keys(json.data)
     fields.forEach(field => {
       if (keys.indexOf(field) !== -1) {
@@ -41,7 +41,7 @@ const formatPayload = json => {
     })
   }
   // nested, with custom fields
-  if (fields.length != 0 && NESTED_RESPONSE == 'yes') {
+  if (fields.length !== 0 && NESTED_RESPONSE === 'yes') {
     const keys = Object.keys(json.data)
     output.data = {}
     fields.forEach(field => {
