@@ -33,7 +33,7 @@ ports: []
 envPorts: []
 devices: []
 envDevices: []
-envMunts: []
+envMounts: []
 mounts: []
 tags:                                   # Array of tags.
   - 'NodeJS'
