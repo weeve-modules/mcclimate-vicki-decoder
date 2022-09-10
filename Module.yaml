@@ -29,11 +29,16 @@ envs:                                   # Array of environment variables that wi
     type: 'text'
     options: []
     dependencies: []
+ports: []
+envPorts: []
+devices: []
+envDevices: []
+envMunts: []
 mounts: []
 tags:                                   # Array of tags.
   - 'NodeJS'
   - 'Processing'
   - 'McClimate'
   - 'Decoder'
-  - 'Boilerplate 1.0.0'
+  - '1.0.0'
 icon: 'https://icons-020-demo.s3.eu-central-1.amazonaws.com/mi_m-climate_process.png'    # Icon URL that will be displayed in the UI.
